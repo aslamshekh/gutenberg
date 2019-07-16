@@ -26,6 +26,13 @@ class VisualEditor extends Component {
 		};
 	}
 
+	static getDerivedStateFromProps( props, state ) {
+		if ( props.isAnyBlockSelected && state.isPostTitleSelected ) {
+			return { isPostTitleSelected: false };
+		}
+		return null;
+	}
+
 	onPostTitleSelect() {
 		this.setState( { isPostTitleSelected: true } );
 		this.props.clearSelectedBlock();
@@ -100,9 +107,12 @@ export default compose( [
 			getEditedPostAttribute,
 		} = select( 'core/editor' );
 
+		const { getSelectedBlockClientId } = select( 'core/block-editor' );
+
 		return {
 			blocks: getEditorBlocks(),
 			title: getEditedPostAttribute( 'title' ),
+			isAnyBlockSelected: !! getSelectedBlockClientId(),
 		};
 	} ),
 	withDispatch( ( dispatch ) => {

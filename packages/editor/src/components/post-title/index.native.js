@@ -95,6 +95,7 @@ class PostTitle extends Component {
 						this.titleViewRef = ref;
 					} }
 					__unstablePasteHandler={ pasteHandler }
+					__unstableIsSelected={ this.props.isSelected }
 				>
 				</RichText>
 			</View>
